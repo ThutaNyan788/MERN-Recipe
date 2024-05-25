@@ -6,10 +6,10 @@ const app = express();
 // ENV File Access
 require("dotenv").config();
 
-
 // Router 
 const recipesRoutes = require("./routes/recipes");
 
+app.use(express.json());
 app.use(morgan("dev"));
 
 
