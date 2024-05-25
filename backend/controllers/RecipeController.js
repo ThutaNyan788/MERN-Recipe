@@ -1,4 +1,5 @@
 const Recipe = require("./../model/Recipe");
+const mongoose = require("mongoose");
 
 const RecipeController = {
     index: async (req, res) => {
@@ -7,7 +8,7 @@ const RecipeController = {
 
             res.status(200).json(recipes);
         } catch (error) {
-            return res.status(500).json({msg:"Something went wrong!!"})
+            return res.status(500).json({ msg: "Something went wrong!!" })
         }
     },
     store: async (req, res) => {
@@ -24,21 +25,58 @@ const RecipeController = {
             return res.status(400).json({ msg: "Invalid field" })
         }
     },
-    show:async (req, res) => {
+    show: async (req, res) => {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({ msg: "Not a valid id!!" })
+            }
             const recipe = await Recipe.findById(id);
+
+            if (!recipe) {
+                return res.status(404).json({ msg: "There is no recipe with that id" })
+            }
 
             res.status(200).json(recipe);
         } catch (error) {
-            return res.status(404).json({msg:"This Recipe Not Found!!"})
+            return res.status(500).json({ msg: "Internal Server Error" })
         }
     },
-    destroy: (req, res) => {
-        res.send("Delete recipe")
+    destroy: async(req, res) => {
+        try {
+            const { id } = req.params;
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({ msg: "Not a valid id!!" })
+            }
+            const recipe = await Recipe.findByIdAndDelete(id);
+
+            if (!recipe) {
+                return res.status(404).json({ msg: "There is no recipe with that id" })
+            }
+
+            res.status(200).json(recipe);
+        } catch (error) {
+            return res.status(500).json({ msg: "Internal Server Error" })
+        }
     },
-    update: (req, res) => {
-        res.send("Update recipe")
+    update:async (req, res) => {
+        try {
+            const { id } = req.params;
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({ msg: "Not a valid id!!" })
+            }
+            const recipe = await Recipe.findByIdAndUpdate(id,{
+                ...req.body
+            },{new:true});
+
+            if (!recipe) {
+                return res.status(404).json({ msg: "There is no recipe with that id" })
+            }
+
+            res.status(200).json(recipe);
+        } catch (error) {
+            return res.status(500).json({ msg: "Internal Server Error" })
+        }
     }
 }
 
