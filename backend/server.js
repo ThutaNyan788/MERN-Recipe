@@ -2,6 +2,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 // ENV File Access
 require("dotenv").config();
@@ -9,6 +10,7 @@ require("dotenv").config();
 // Router 
 const recipesRoutes = require("./routes/recipes");
 
+app.use(cors());// For local development --Warning
 app.use(express.json());
 app.use(morgan("dev"));
 
