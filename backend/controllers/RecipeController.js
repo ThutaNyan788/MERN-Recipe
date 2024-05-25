@@ -1,8 +1,14 @@
 const Recipe = require("./../model/Recipe");
 
 const RecipeController = {
-    index: (req, res) => {
-        res.send("All Recipes")
+    index: async (req, res) => {
+        try {
+            const recipes = await Recipe.find().sort({ createdAt: -1 })
+
+            res.status(200).json(recipes);
+        } catch (error) {
+            return res.status(500).json({msg:"Something went wrong!!"})
+        }
     },
     store: async (req, res) => {
         try {
@@ -15,11 +21,18 @@ const RecipeController = {
             })
             res.status(201).json(recipe);
         } catch (error) {
-            return res.status(400).json({msg:"Invalid field"})
+            return res.status(400).json({ msg: "Invalid field" })
         }
     },
-    show: (req, res) => {
-        res.send("Show Single recipe")
+    show:async (req, res) => {
+        try {
+            const {id} = req.params;
+            const recipe = await Recipe.findById(id);
+
+            res.status(200).json(recipe);
+        } catch (error) {
+            return res.status(404).json({msg:"This Recipe Not Found!!"})
+        }
     },
     destroy: (req, res) => {
         res.send("Delete recipe")
