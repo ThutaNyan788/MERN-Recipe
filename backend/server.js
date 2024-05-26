@@ -9,6 +9,8 @@ require("dotenv").config();
 
 // Router 
 const recipesRoutes = require("./routes/recipes");
+const usersRoutes = require("./routes/users");
+
 
 app.use(cors());// For local development --Warning
 app.use(express.json());
@@ -18,6 +20,8 @@ app.use(morgan("dev"));
 
 // Recipes 
 app.use("/api/recipes", recipesRoutes);
+app.use("/api/users", usersRoutes);
+
 
 
 // Database connecting
