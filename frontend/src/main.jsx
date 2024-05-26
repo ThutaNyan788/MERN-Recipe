@@ -11,6 +11,7 @@ import "./index.css";
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
 import Contact from './pages/Contact';
+import RecipeForm from './pages/RecipeForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path:"/contact",
         element:<Contact/>
+      },
+      {
+        path:"/recipes/create",
+        element:<RecipeForm/>
       }
     ]
   },

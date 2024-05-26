@@ -1,4 +1,5 @@
 import React from 'react'
+import Ingredient from './Ingredient'
 
 export default function RecipeCard({recipe}) {
     return (
@@ -8,19 +9,7 @@ export default function RecipeCard({recipe}) {
             <p>
                 {recipe.description}
             </p>
-            <div className='space-x-2'>
-                Ingredients -
-                {!!recipe.ingredients.length && recipe.ingredients.map((ingredient, index) => {
-                    return (
-                        <span key={index} className='bg-orange-400 text-white  px-2 py-1 text-sm rounded-full '>
-                            {ingredient}
-                        </span>
-                    )
-                })}
-
-
-
-            </div>
+            <Ingredient ingredients={recipe.ingredients}/>
             <p className='text-gray'>Published at - {recipe.createdAt}</p>
         </div>
     )
