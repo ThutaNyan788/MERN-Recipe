@@ -1,20 +1,45 @@
 const User = require("../model/User")
-const bcrypt = require("bcrypt");
+const createToken = require("./../helpers/createToken");
 
 const UserController = {
-    login: (req, res) => {
-        return res.json({ msg: "hit login api" })
+    me:async(req,res)=>{
+        return res.json(req.user);
+    },
+    login: async (req, res) => {
+
+        try {
+            let { email, password } = req.body;
+            let user = await User.login(email, password);
+
+
+            let token = createToken(user._id);
+            res.cookie("jwt", token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 });
+            return res.json({ user, token });
+
+            
+        } catch (error) {
+            return res.status(400).json({ msg: error.message });
+
+        }
+
     },
     register: async (req, res) => {
         try {
             let { name, email, password } = req.body;
-            
-            let user =await User.register(name,email,password);
+            let user = await User.register(name, email, password);
+            let token = createToken(user._id);
 
-            return res.json(user)
+            res.cookie("jwt", token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 });
+
+            return res.json({ user, token });
+
         } catch (error) {
             return res.status(400).json({ msg: error.message });
         }
+    },
+    logout:(req,res)=>{
+         res.cookie("jwt","",{maxAge:1});
+         return res.json({message:"user logged out"})
     }
 }
 

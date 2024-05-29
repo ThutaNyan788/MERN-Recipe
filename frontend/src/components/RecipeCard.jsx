@@ -1,13 +1,13 @@
 import React from 'react'
 import Ingredient from './Ingredient'
-import axios from 'axios'
+import axios from './../helpers/axios'
 import { Link } from 'react-router-dom';
 
 export default function RecipeCard({ recipe, onDeleted }) {
 
 
     let deleteRecipe = async () => {
-        let res = await axios.delete(`http://localhost:4000/api/recipes/${recipe._id}`);
+        let res = await axios.delete(`/api/recipes/${recipe._id}`);
 
         if (res.status == 200) {
             onDeleted(recipe._id);
@@ -16,6 +16,7 @@ export default function RecipeCard({ recipe, onDeleted }) {
 
     return (
         <div key={recipe._id} className='bg-white p-5 rounded-2xl space-y-4'>
+            <img className='mx-auto h-64 object-contain' src={import.meta.env.VITE_BACKEND_ASSET_URL+recipe.photo} alt="" />
             <div className="flex justify-between">
                 <h3 className='text-xl font-bold text-orange-400'>{recipe.title}</h3>
 
