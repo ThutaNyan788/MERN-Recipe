@@ -71,7 +71,7 @@ export default function SignInForm() {
                     <button type="submit" className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" >
                         Login
                     </button>
-                    <Link to="/login" className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800" href="#">
+                    <Link to="/sign-up" className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800" href="#">
                         Register Here
                     </Link>
                 </div>

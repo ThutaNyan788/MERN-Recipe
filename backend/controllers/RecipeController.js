@@ -66,7 +66,7 @@ const RecipeController = {
         
             // email queue
             emailQueue.add({
-                viewFileName: "email.ejs",
+                viewFileName: "email",
                 data: {
                     name: req.user.name,
                     recipe

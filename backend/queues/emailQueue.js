@@ -8,11 +8,8 @@ const emailQueue = new Queue('emailQueue', {
 
 
 emailQueue.process(async function (job) {
-    // job.data
-    // send mails to all users;
-    // setTimeout(async ()=>{
+    
         await sendEmail(job.data);
-    // },5000)
 })
 
 
